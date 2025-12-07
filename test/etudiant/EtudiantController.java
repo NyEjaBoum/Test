@@ -7,10 +7,6 @@ import framework.view.ModelView;
 
 @Controller(value = "/etudiant")
 public class EtudiantController {
-    @Url(value = "/{id}")
-    public String get(int id) {
-        return "Etudiant id = " + id;
-    }
 
     @Url(value = "/form")
     public ModelView form(){
@@ -26,6 +22,22 @@ public class EtudiantController {
         return "Ajout OK: " + nom + " (" + age + ")"; // renvoie texte simple
     }
 
+
+    @Url(value = "/{id}/note/{noteId}")
+    public String detail(
+        @VariableChemin("id") Integer idEtudiant,
+        @VariableChemin(value = "noteId", required = false) Integer idNote
+    ) {
+        return "idEtudiant=" + idEtudiant + ", idNote=" + idNote;
+    }
+
+    @Url(value = "/{id}")
+    public String get(
+        @VariableChemin("id") int id,
+        @ParametreRequete(value = "format", required = false) String format
+    ) {
+        return "id=" + id + ", format=" + format;
+    }
 
     @Url(value = "/list")
     public ModelView list() {
