@@ -10,5 +10,9 @@
     <label>Age: <input type="number" name="age" /></label><br/>
     <button type="submit">Ajouter</button>
   </form>
+  <% String msg = (String) request.getAttribute("message"); %>
+  <% if (msg != null) { %>
+      <div class="alert"><%= msg %></div>
+  <% } %>
 </body>
 </html>
