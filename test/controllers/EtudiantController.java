@@ -7,6 +7,7 @@ import framework.view.ModelView;
 import java.util.Map;
 import models.Etudiant;
 import models.Departement;
+import framework.servlet.FileUploadUtil;
 
 @Controller(value = "/etudiant")
 public class EtudiantController {
@@ -18,17 +19,26 @@ public class EtudiantController {
         return mv;
     }
 
-    @PostMethod("/upload")
-    public ModelView upload(Map<String, byte[]> fileMap) {
-        ModelView mv = new ModelView();
-        mv.setView("WEB-INF/etudiant/result.jsp");
-        if (fileMap != null && !fileMap.isEmpty()) {
-            mv.setMessage("Fichier reçu : " + fileMap.keySet());
-        } else {
-            mv.setMessage("Aucun fichier reçu");
+@PostMethod("/upload")
+public ModelView upload(Map<String, byte[]> fileMap, jakarta.servlet.http.HttpServletRequest request) {
+    ModelView mv = new ModelView();
+    mv.setView("WEB-INF/etudiant/result.jsp");
+    if (fileMap != null && !fileMap.isEmpty()) {
+        try {
+            String uploadDir = "WEB-INF/upload";
+            String realPath = request.getServletContext().getRealPath("/" + uploadDir);
+            System.out.println("DEBUG realPath = " + realPath); // <-- Ajoute ce log
+            int nb = framework.servlet.FileUploadUtil.saveFiles(fileMap, realPath);
+            mv.setMessage(nb + " fichier(s) enregistré(s) dans " + uploadDir);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mv.setMessage("Erreur lors de l'enregistrement : " + ex.getMessage());
         }
-        return mv;
+    } else {
+        mv.setMessage("Aucun fichier reçu");
     }
+    return mv;
+}
 
     @PostMethod("/save")
     public ModelView save(Etudiant etudiant, Departement departement) {

@@ -2,6 +2,7 @@
 <%
     Etudiant etu = (Etudiant) request.getAttribute("etudiant");
     Departement dep = (Departement) request.getAttribute("departement");
+    String msg = (String) request.getAttribute("message");
 %>
 <!DOCTYPE html>
 <html>
@@ -10,7 +11,10 @@
     <title>Résultat</title>
 </head>
 <body>
-    <h2>Résultat du binding automatique</h2>
+    <% if (msg != null) { %>
+        <div class="info"><%= msg %></div>
+    <% } %>
+    <%-- <h2>Résultat du binding automatique</h2>
     <h3>Etudiant</h3>
     <ul>
         <li>Nom: <%= etu != null ? etu.getNom() : "" %></li>
@@ -22,6 +26,6 @@
     <ul>
         <li>Nom: <%= dep != null ? dep.getNom() : "" %></li>
         <li>Code: <%= dep != null ? dep.getCode() : "" %></li>
-    </ul>
+    </ul> --%>
 </body>
 </html>
