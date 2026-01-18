@@ -21,7 +21,7 @@ public class EtudiantController {
     @PostMethod("/upload")
     public ModelView upload(Map<String, byte[]> fileMap) {
         ModelView mv = new ModelView();
-        mv.setView("WEB-INF/etudiant/resultUpload.jsp");
+        mv.setView("WEB-INF/etudiant/result.jsp");
         if (fileMap != null && !fileMap.isEmpty()) {
             mv.setMessage("Fichier reçu : " + fileMap.keySet());
         } else {
