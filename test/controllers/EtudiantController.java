@@ -12,6 +12,24 @@ import framework.servlet.FileUploadUtil;
 @Controller(value = "/etudiant")
 public class EtudiantController {
 
+    @GetMethod("/test-session")
+    public ModelView testSession(@Session Map<String, Object> session) {
+        // Ajout d'une variable de session
+        session.put("testKey", "valeur test");
+
+        // Suppression d'une variable de session (exemple)
+        session.remove("toRemove");
+
+        // Lecture d'une variable de session
+        Object user = session.get("user");
+
+        ModelView mv = new ModelView();
+        mv.setView("WEB-INF/etudiant/result.jsp");
+        mv.setMessage("Session testée. user=" + user + ", testKey=" + session.get("testKey"));
+        mv.addAttribute("session", session); // Pour afficher tout le contenu si besoin
+        return mv;
+    }
+
     @GetMethod("/upload-form")
     public ModelView uploadForm() {
         ModelView mv = new ModelView();
